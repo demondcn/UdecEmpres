@@ -1,0 +1,14 @@
+# Environment variables declared in this file are automatically made available to Prisma.
+# See the documentation for more detail: https://pris.ly/d/prisma-schema#accessing-environment-variables-from-the-schema
+
+# Prisma supports the native connection string format for PostgreSQL, MySQL, SQLite, SQL Server, MongoDB and CockroachDB.
+# See the documentation for all the connection string options: https://pris.ly/d/connection-strings
+
+DATABASE_URL="mysql://root:1234@localhost:3306/isum"
+NEXTAUTH_URL="http://localhost:3000"
+
+# DATABASE_URL="mysql://root:1234@localhost:3306/isum"
+# NEXTAUTH_URL="https://emprex360.vercel.app"
+RESEND_API_KEY=re_LK68Biy3_E36wcDkVrLEtz53iKVnaZAws
+NEXT_PUBLIC_BASE_URL=http://localhost:3000  # O la URL de tu aplicación en producción
+NEXTAUTH_SECRET=1c3b9f4d1e5e6f2d7b8c9a0e4f6b3d1a2c9e7f8b6a1d4e5f7c8d9b0a2f3b7d6

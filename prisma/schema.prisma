@@ -1,0 +1,97 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+}
+
+model User {
+  id         Int         @id @default(autoincrement())
+  name       String
+  email      String      @unique
+  password   String
+  diagnoses  Diagnosis[]
+  empresas   Empresa[]
+  mensajes   MensajesPalAdmin[]
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  passwordResets PasswordReset[]
+}
+
+model Diagnosis {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  status    String   
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user      User     @relation(fields: [userId], references: [id])
+  tests     Test[]
+}
+
+model Test {
+  id            Int      @id @default(autoincrement())
+  diagnosisId   Int
+  number        Int      
+  result        Int      
+  description   String   
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  diagnosis     Diagnosis @relation(fields: [diagnosisId], references: [id])
+}
+
+model Empresa {
+  id                  Int      @id @default(autoincrement())
+  nombre              String
+  estado              String   
+  correoElectronico   String
+  telefonos           String
+  nombreContacto      String
+  nit                 String
+  tipoEmpresa         String
+  sector              String
+  anoFundacion        Int
+  ubicacion           String
+  ingresosAnuales     String
+  activosTotales      String
+  patrimonio          String
+  numeroEmpleados     String
+  canalesDistribucion String
+  principalesClientes String
+  tecnologiaUtilizada String
+  emailAuthorization  Boolean
+  userId              Int
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  user                User     @relation(fields: [userId], references: [id])
+
+  @@map("empresas") // Opcional: especifica un nombre personalizado de la tabla en la base de datos
+}
+
+model PasswordReset {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  token     String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model MensajesPalAdmin {
+  id        Int      @id @default(autoincrement())
+  userId    Int      
+  asunto    String  
+  mensaje   String   
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id])
+  @@map("mensajes_pal_admin") 
+}
